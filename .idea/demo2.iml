@@ -124,6 +124,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/command" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/tencentcloud/tencentcloud-sdk-php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/qcloud/vod-sdk-v5" />
+      <excludeFolder url="file://$MODULE_DIR$/storage" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
