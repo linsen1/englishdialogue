@@ -1,4 +1,4 @@
-FROM php:8.0.5
+FROM php:7.4-fpm-alpine
 
 RUN docker-php-ext-install pdo pdo_mysql sockets
 RUN curl -sS https://getcomposer.org/installer​ | php -- \
@@ -11,5 +11,5 @@ COPY . .
 RUN composer install
 
 
-CMD php artisan serve --host=127.0.0.1 --port=80
+CMD php artisan serve --host=0.0.0.0 --port=80
 EXPOSE 80
