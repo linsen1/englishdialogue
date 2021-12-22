@@ -29,15 +29,22 @@ Route::prefix("v1")->group(function (){
    Route::get('/dialogue-info/{id}',[HomeController::class,'showDialogue'])->name('show.dialogueInfo');
 
    //用户注册、更新、查看相关方法
+   Route::get('/custom-user/{id}',[CustomUserController::class,'show'])->name('custom.user.show');
+   Route::post('/user-action',[CustomUserController::class,'customUserAction'])->name('custom.user.action'); //用户注册或更新接口
+
+   //暂不使用
    Route::post('/custom-user',[CustomUserController::class,'store'])->name('custom.user.reg');
    Route::put('/custom-user/{id}',[CustomUserController::class,'update'])->name('custom.user.update');
-   Route::get('/custom-user/{id}',[CustomUserController::class,'show'])->name('custom.user.show');
+
 
    //用户喜欢模块的相关方法
    Route::get('/user-fav-top5/{userid}',[CustomUserController::class,'getUserFav'])->name('custom.user.fav-top5');
    Route::get('/user-fav-list/{userid}',[CustomUserController::class,'getUserFavList'])->name('custom.user.fav-list');
+   Route::post('/user-has-fav',[CustomUserController::class,'hasFav'])->name('custom.user.has-fav');
+   Route::post('/user-fav-action',[CustomUserController::class,'userFavAction'])->name('custom.user.fav-action');  //添加和删除喜欢接口
+
+//暂不使用
    Route::post('/user-add-fav',[CustomUserController::class,'addUserFav'])->name('custom.user.add-fav');
    Route::delete('/user-del-fav',[CustomUserController::class,'delUserFav'])->name('custom.user.del-fav');
-   Route::post('/user-has-fav',[CustomUserController::class,'hasFav'])->name('custom.user.has-fav');
 
 });

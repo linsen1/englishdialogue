@@ -69,14 +69,14 @@ class HomeController extends Controller
     public function lastDialog()
     {
         $status = 200;
-        $infos = DialogueBase::orderBY('created_at', 'desc')->take(10)->get();
+        $infos = DialogueBase::orderBY('created_at', 'desc')->take(5)->get();
         return response()->json(['status' => $status, 'data' => $infos]);
     }
 
     public function lastDialogBase()
     {
         $status = 200;
-        $info = ClassBase::orderBY('created_at', 'desc')->take(10)->get();
+        $info = ClassBase::orderBY('created_at', 'desc')->take(5)->get();
         if ($info) {
             return response()->json(['status' => $status, 'data' => $info]);
         } else {

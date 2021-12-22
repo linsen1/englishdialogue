@@ -45,6 +45,23 @@ class CustomUserController extends Controller
         //
     }
 
+
+
+    public function customUserAction(StoreCustomUser $request)
+    {
+        $status = 200;
+        $validated=$request->validated();
+        $custom_user=CustomUser::updateOrCreate(
+            ['user_wx_openid'=>$validated['user_wx_openid']],
+            ['user_nickname'=>$validated['user_nickname'],'user_pic'=>$request->input('user_pic')]
+        );
+
+        return response()->json(['status'=>$status,'data'=>['flag'=>'1','info'=>$custom_user]]);
+    }
+
+
+
+
     /**
      * Display the specified resource.
      *
@@ -93,14 +110,14 @@ class CustomUserController extends Controller
 
     public  function  getUserFav($userid){
         $status=200;
-        $custom_user=CustomUser::findOrFail($userid);
-        $custom_fav_top5=$custom_user->UserFavorites->sortByDesc('created_at')->take(5);
-        return response()->json(['status'=>$status,'data'=>$custom_fav_top5]);
+        $favinfo=UserFavorite::with('DialogueInfo')->where('custom_user_id',$userid)->latest()->take(5)->get();
+       // $custom_fav_top5=UserFavorite::where('custom_user_id',$userid);
+      return response()->json(['status'=>$status,'data'=>$favinfo]);
     }
 
     public  function getUserFavList($userid){
         $status=200;
-        $custom_fav_list=UserFavorite::where('custom_user_id',$userid)->orderBy('created_at', 'desc')->paginate(10);
+        $custom_fav_list=UserFavorite::with('DialogueInfo')->where('custom_user_id',$userid)->latest()->paginate(10);
         return response()->json(['status'=>$status,'data'=>$custom_fav_list]);
     }
 
@@ -125,6 +142,28 @@ class CustomUserController extends Controller
             return response()->json(['status'=>$status,'data'=>['flag'=>'1','info'=>$user_fav]]);
         }
     }
+
+    public function userFavAction(StoreUserFavorite $request)
+    {
+        $status = 200;
+        $validated = $request->validated();
+        $is_user_fav = UserFavorite::where([['custom_user_id', '=', $validated['custom_user_id']], ['fav_info_id', '=', $validated['fav_info_id']]]);
+
+        if ($is_user_fav->count() == 0){
+            $user_fav1 = UserFavorite::create(
+                ['custom_user_id' => $validated['custom_user_id'], 'fav_info_id' => $validated['fav_info_id']]
+            );
+            return response()->json(['status'=>$status,'data'=>['flag'=>'1','info'=>$user_fav1]]);
+        } else{
+            $user_fav=$is_user_fav->delete();
+            return response()->json(['status'=>$status,'data'=>['flag'=>'1','info'=>'已删除']]);
+        }
+
+
+    }
+
+
+
 
     public function delUserFav(StoreUserFavorite $request){
         $status=200;
