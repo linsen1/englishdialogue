@@ -46,7 +46,28 @@
         {{$message}}
     </div>
     @enderror
+
 </div>
+
+<div class="mb-3">
+
+    <label class="form-label" for="formFile">推荐位图片</label>
+    @if (optional($dialogues??null)->dialogue_home_pic)
+        <div class="card">
+            <a href="{{env('tencent_url_default').optional($dialogues??null)->dialogue_home_pic}}" target="_blank"> <img src="{{env('tencent_url_default').optional($dialogues??null)->dialogue_home_pic}}" width="200px" alt="..."></a>
+        </div>
+    @endif
+    <input class="form-control" type="file" id="formFile" name="dialogue_home_pic" >
+
+    @error('dialogue_home_pic')
+    <br/>
+    <div class="alert alert-danger" role="alert">
+        {{$message}}
+    </div>
+    @enderror
+
+</div>
+
 <div class="mb-3">
     <label  class="form-label">权重（排序，越大越靠前）</label>
     <input type="number" class="form-control" id="exampleInputNumber1" value="{{old('dialogue_order',optional($dialogues??null)->dialogue_order)}}" name="dialogue_order">

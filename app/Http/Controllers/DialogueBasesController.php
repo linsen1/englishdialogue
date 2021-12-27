@@ -45,11 +45,17 @@ class DialogueBasesController extends Controller
         $dialogues->dialogue_order=$validated['dialogue_order'];
         $dialogues->dialogue_sentence_count=$validated['dialogue_sentence_count'];
         $dialogues->dialogue_pic=$validated['dialogue_pic'];
+        $dialogues->dialogue_home_pic=$validated['dialogue_home_pic'];
         $dialogues->class_base_id=$validated['class_base_id'];
         if($request->hasFile('dialogue_pic')){
             $localfile=$request->dialogue_pic->store('images','public');
             $up_to_buket=up_file_to_tencent_buck($localfile,$localfile);
             $dialogues->dialogue_pic= $up_to_buket;
+        }
+        if($request->hasFile('dialogue_pic')){
+            $localfile1=$request->dialogue_home_pic->store('images','public');
+            $up_to_buket=up_file_to_tencent_buck($localfile1,$localfile1);
+            $dialogues->dialogue_home_pic= $up_to_buket;
         }
         $dialogues->save();
         return redirect()->route('dialogue.list');
@@ -96,6 +102,11 @@ class DialogueBasesController extends Controller
             $localfile=$request->dialogue_pic->store('images','public');
             $up_to_buket=up_file_to_tencent_buck($localfile,$localfile);
             $dialogues->dialogue_pic= $up_to_buket;
+        }
+        if($request->hasFile('dialogue_home_pic')){
+            $localfile=$request->dialogue_home_pic->store('images','public');
+            $up_to_buket=up_file_to_tencent_buck($localfile,$localfile);
+            $dialogues->dialogue_home_pic= $up_to_buket;
         }
         $dialogues->save();
 

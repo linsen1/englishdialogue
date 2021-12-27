@@ -28,6 +28,7 @@ class StoreDialogue extends FormRequest
         return [
             'dialogue_title' => 'bail|required|min:2|max:30',
             'dialogue_pic' => 'required',//
+            'dialogue_home_pic' => 'required',//
             'dialogue_order' => 'required',
             'dialogue_sentence_count' => 'required',
             'class_base_id' => 'required'
