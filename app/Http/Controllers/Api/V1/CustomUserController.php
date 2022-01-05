@@ -71,8 +71,11 @@ class CustomUserController extends Controller
     public function show($id)
     {
         $status=200;
-        $custom_user=CustomUser::findOrFail($id);
-        return response()->json(['status'=>$status, 'data'=>$custom_user]);
+        if($custom_user=CustomUser::find($id)) {
+            return response()->json(['status' => $status, 'data' => $custom_user]);
+        } else{
+            return response()->json(['status' => $status, 'data' => '']);
+        }
         //
     }
 
@@ -156,7 +159,7 @@ class CustomUserController extends Controller
             return response()->json(['status'=>$status,'data'=>['flag'=>'1','info'=>$user_fav1]]);
         } else{
             $user_fav=$is_user_fav->delete();
-            return response()->json(['status'=>$status,'data'=>['flag'=>'1','info'=>'已删除']]);
+            return response()->json(['status'=>$status,'data'=>['flag'=>'0','info'=>'已删除']]);
         }
 
 
