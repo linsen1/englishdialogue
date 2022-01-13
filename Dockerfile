@@ -31,10 +31,6 @@ COPY . .
 RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 RUN composer install
 
-# 替换nginx、fpm、php配置
-RUN mkdir -p /run/nginx \
-    && chmod -R 777 /app/storage \
-    && mv /usr/sbin/php-fpm7 /usr/sbin/php-fpm
 
 # 暴露端口
 EXPOSE 80
