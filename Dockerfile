@@ -20,11 +20,11 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
 RUN curl -sS https://getcomposer.org/installer | php -- \
      --install-dir=/usr/local/bin --filename=composer
 
-COPY --from=composer@sha256:d374b2e1f715621e9d9929575d6b35b11cf4a6dc237d4a08f2e6d1611f534675 /usr/local/bin/composer /usr/local/bin/composer
+FROM composer@sha256:d374b2e1f715621e9d9929575d6b35b11cf4a6dc237d4a08f2e6d1611f534675 as composer
 
 WORKDIR /app
-RUN composer install
 COPY . /app
+RUN composer install
 
 
 RUN cp /app/conf/nginx.conf /etc/nginx/conf.d/default.conf \
