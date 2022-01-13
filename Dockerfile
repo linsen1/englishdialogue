@@ -22,7 +22,7 @@ FROM composer:latest as vendor
 
 WORKDIR /app
 COPY . /app
-RUN composer install
+
 
 
 
