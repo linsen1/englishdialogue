@@ -28,7 +28,7 @@ WORKDIR /app
 
 # 将当前目录下所有文件拷贝到/app
 COPY . .
-
+RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 RUN composer install
 
 # 替换nginx、fpm、php配置
