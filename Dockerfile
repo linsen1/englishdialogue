@@ -11,8 +11,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 COPY --from=composer@sha256:d374b2e1f715621e9d9929575d6b35b11cf4a6dc237d4a08f2e6d1611f534675 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
-COPY . .
 RUN composer install
+COPY . .
+
 
 RUN cp /app/conf/nginx.conf /etc/nginx/conf.d/default.conf \
     && cp /app/conf/fpm.conf /etc/php7/php-fpm.d/www.conf \
