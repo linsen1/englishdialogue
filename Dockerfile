@@ -15,13 +15,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     php7-pdo_mysql \
     php7-tokenizer \
     nginx \
-    && rm -f /var/cache/apk/* \
-
-
-RUN curl -sS https://getcomposer.org/installer | php -- \
-     --install-dir=usr/bin/ --filename=composer
-
-FROM composer:latest as vendor
+    && rm -f /var/cache/apk/*
 
 # 设定工作目录
 WORKDIR /app
@@ -29,8 +23,17 @@ WORKDIR /app
 # 将当前目录下所有文件拷贝到/app
 COPY . /app
 
-RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
-RUN composer install
+# 替换nginx、fpm、php配置
+RUN cp /app/conf/nginx.conf /etc/nginx/conf.d/default.conf \
+    && cp /app/conf/fpm.conf /etc/php7/php-fpm.d/www.conf \
+    && cp /app/conf/php.ini /etc/php7/php.ini \
+    && mkdir -p /run/nginx \
+    && chmod -R 777 /app/storage \
+    && mv /usr/sbin/php-fpm7 /usr/sbin/php-fpm
 
-CMD php artisan serve --host=0.0.0.0 --port=80
+# 暴露端口
 EXPOSE 80
+
+# 容器启动执行脚本
+CMD ["sh", "run.sh"]
+
