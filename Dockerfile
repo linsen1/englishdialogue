@@ -17,7 +17,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     nginx \
     && rm -f /var/cache/apk/*
 
-FROM composer:2.0 as vendor
+FROM composer:latest as vendor
 
 WORKDIR /app
 COPY . /app
