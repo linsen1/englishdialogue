@@ -1,4 +1,4 @@
-FROM alpine:3.13
+FROM php:7.4-fpm-alpine3.13
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositories \
     && apk add --update --no-cache \
