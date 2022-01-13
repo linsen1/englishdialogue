@@ -20,8 +20,9 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
 FROM composer:latest as vendor
 
 WORKDIR /app
-COPY . /app
 RUN composer install
+COPY . /app
+
 
 
 RUN cp /app/conf/nginx.conf /etc/nginx/conf.d/default.conf \
