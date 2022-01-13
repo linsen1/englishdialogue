@@ -1,18 +1,6 @@
 FROM php:7.4-fpm-alpine3.13
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositories \
-    && apk add --update --no-cache \
-    php7 \
-    php7-json \
-    php7-ctype \
-	php7-exif \
-    php7-fpm \
-    php7-session \
-    php7-pdo_mysql \
-    php7-tokenizer \
-    sockets\
-    nginx \
-    && rm -f /var/cache/apk/* \
+RUN docker-php-ext-install pdo pdo_mysql sockets nginx
 
 RUN curl -sS https://getcomposer.org/installer | php -- \
      --install-dir=/usr/local/bin --filename=composer
