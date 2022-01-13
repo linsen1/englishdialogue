@@ -32,17 +32,5 @@ COPY . /app
 RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 RUN composer install
 
-# 容器启动执行脚本
-# 替换nginx、fpm、php配置
-RUN cp /app/conf/nginx.conf /etc/nginx/nginx.conf \
-    && cp /app/conf/fpm.conf /etc/php7/php-fpm.d/www.conf \
-    && cp /app/conf/php.ini /etc/php7/php.ini \
-    && mkdir -p /run/nginx \
-    && chmod -R 777 /app/storage \
-    && mv /usr/sbin/php-fpm7 /usr/sbin/php-fpm
-
-# 暴露端口
+CMD php artisan serve --host=0.0.0.0 --port=80
 EXPOSE 80
-
-# 容器启动执行脚本
-CMD ["sh", "run.sh"]
