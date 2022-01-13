@@ -31,9 +31,6 @@ COPY . .
 RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 RUN composer install
 
-
-# 暴露端口
-EXPOSE 80
-
 # 容器启动执行脚本
-CMD ["sh", "run.sh"]
+CMD php artisan serve --host=0.0.0.0 --port=80
+EXPOSE 80
