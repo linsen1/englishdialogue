@@ -18,7 +18,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     && rm -f /var/cache/apk/* \
 
 RUN curl -sS https://getcomposer.org/installer | php -- \
-     --install-dir=/usr/local/bin --filename=composer
+     --install-dir=usr/bin/ --filename=composer
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
