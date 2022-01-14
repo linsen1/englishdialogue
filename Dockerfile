@@ -12,14 +12,13 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
 	php7-exif \
     php7-fpm \
     php7-pgsql\
-    php-mysql\
     php7-session \
     php7-pdo_mysql \
     php7-tokenizer \
     nginx \
     && rm -f /var/cache/apk/* \
 
-RUN docker-php-ext-install mysqli
+RUN docker-php-ext-install mysqli php-mysql
 
 RUN curl -sS https://getcomposer.org/installer | php -- \
      --install-dir=/usr/local/bin --filename=composer
