@@ -26,7 +26,7 @@ WORKDIR /app
 COPY . /app
 
 RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
-RUN composer install
+
 
 # 替换nginx、fpm、php配置
 RUN cp /app/conf/nginx.conf /etc/nginx/conf.d/default.conf \
