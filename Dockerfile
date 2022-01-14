@@ -17,7 +17,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     nginx \
     && rm -f /var/cache/apk/*
 
-FROM composer:latest as vendor
+
 
 # 设定工作目录
 WORKDIR /app
@@ -32,8 +32,9 @@ RUN cp /app/conf/nginx.conf /etc/nginx/conf.d/default.conf \
     && cp /app/conf/php.ini /etc/php7/php.ini \
     && mkdir -p /run/nginx \
     && chmod -R 777 /app/storage \
-    && mv /usr/sbin/php-fpm7 /usr/sbin/php-fpm
+    && mv /usr/sbin/php-fpm7 /usr/sbin/php-fpm \
 
+FROM composer:latest as vendor
 RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 # 暴露端口
 EXPOSE 80
