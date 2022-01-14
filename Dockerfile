@@ -6,16 +6,16 @@ FROM php:7.4-fpm-alpine3.13
 # 选用国内镜像源以提高下载速度
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositories \
     && apk add --update --no-cache \
-    php7.4 \
-    php7.4-json \
-    php7.4-ctype \
-	php7.4-exif \
-    php7.4-fpm \
-    php7.4-pgsql\
-    php7.4-mysql\
-    php7.4-session \
-    php7.4-pdo_mysql \
-    php7.4-tokenizer \
+    php7.1 \
+    php7.1-json \
+    php7.1-ctype \
+	php7.1-exif \
+    php7.1-fpm \
+    php7.1-pgsql\
+    php7.1-mysql\
+    php7.1-session \
+    php7.1-pdo_mysql \
+    php7.1-tokenizer \
     nginx \
     && rm -f /var/cache/apk/* \
 
