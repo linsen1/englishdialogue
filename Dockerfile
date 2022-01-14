@@ -11,6 +11,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     php7-ctype \
 	php7-exif \
     php7-fpm \
+    php7-pgsql\
     php7-session \
     php7-pdo_mysql \
     php7-tokenizer \
@@ -27,6 +28,7 @@ WORKDIR /app
 # 将当前目录下所有文件拷贝到/app
 COPY . /app
 
+RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 RUN composer install
 
 # 替换nginx、fpm、php配置
