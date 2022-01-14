@@ -15,6 +15,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     php7-pdo_mysql \
     php7-tokenizer \
     nginx \
+    docker-php-ext-install \
+    sockets \
     && rm -f /var/cache/apk/*
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer 
