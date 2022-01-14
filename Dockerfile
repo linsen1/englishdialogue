@@ -20,6 +20,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
 # 设定工作目录
 WORKDIR /app
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+RUN composer install
 # 将当前目录下所有文件拷贝到/app
 COPY . /app
 
