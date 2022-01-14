@@ -12,7 +12,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
 	php7-exif \
     php7-fpm \
     php7-pgsql\
-    php7-mysql\
+    php-mysql\
     php7-session \
     php7-pdo_mysql \
     php7-tokenizer \
