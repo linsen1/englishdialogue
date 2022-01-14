@@ -25,8 +25,6 @@ WORKDIR /app
 # 将当前目录下所有文件拷贝到/app
 COPY . /app
 
-RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
-
 
 # 替换nginx、fpm、php配置
 RUN cp /app/conf/nginx.conf /etc/nginx/conf.d/default.conf \
@@ -36,6 +34,7 @@ RUN cp /app/conf/nginx.conf /etc/nginx/conf.d/default.conf \
     && chmod -R 777 /app/storage \
     && mv /usr/sbin/php-fpm7 /usr/sbin/php-fpm
 
+RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 # 暴露端口
 EXPOSE 80
 
