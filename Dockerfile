@@ -34,6 +34,7 @@ RUN composer install
 # 替换nginx、fpm、php配置
 RUN cp /app/conf/nginx.conf /etc/nginx/conf.d/default.conf \
     && cp /app/conf/fpm.conf /etc/php7/php-fpm.d/www.conf \
+    && cp /app/conf/php.ini /etc/php7/php.ini \
     && mkdir -p /run/nginx \
     && chmod -R 777 /app/storage \
     && mv /usr/sbin/php-fpm7 /usr/sbin/php-fpm
