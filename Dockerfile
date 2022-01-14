@@ -3,7 +3,7 @@
 FROM alpine:3.13
 
 FROM composer:latest as vendor
-RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+
 
 # 安装依赖包，如需其他依赖包，请到alpine依赖包管理(https://pkgs.alpinelinux.org/packages?name=php8*imagick*&branch=v3.13)查找。
 # 选用国内镜像源以提高下载速度
