@@ -17,9 +17,10 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     nginx \
     && rm -f /var/cache/apk/*
     
-RUN docker-php-ext-install sockets
+RUN curl -sS https://getcomposer.org/installer | php -- \
+     --install-dir=/usr/local/bin --filename=composer
 
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer 
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
         
 # 设定工作目录
 WORKDIR /app
