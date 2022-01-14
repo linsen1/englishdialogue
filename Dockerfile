@@ -18,7 +18,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     && rm -f /var/cache/apk/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- \
---install-dir=/usr/bin --filename=composer && chmod +x /usr/bin/composer 
+--install-dir=/usr/local/bin/ --filename=composer && chmod +x /usr/local/bin/composer 
         
 # 设定工作目录
 WORKDIR /app
