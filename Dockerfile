@@ -26,7 +26,7 @@ WORKDIR /app
 
 # 将当前目录下所有文件拷贝到/app
 COPY . /app
-COPY --from=composer /usr/bin/composer /usr/bin/composer
+
 
 # 替换nginx、fpm、php配置
 RUN cp /app/conf/nginx.conf /etc/nginx/conf.d/default.conf \
