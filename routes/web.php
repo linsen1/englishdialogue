@@ -28,6 +28,11 @@ Route::group(['prefix' => 'admindash'],function(){
     })->name('register');
 });
 
+
+Route::get('phpmyinfo', function () {
+    phpinfo();
+})->name('phpmyinfo');
+
 //配置管理
 Route::get('classBases/list',function (){
     return view('pages.classbase.list',['classBases'=>ClassBase::orderBY('created_at','desc')->get()]);
