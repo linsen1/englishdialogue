@@ -16,7 +16,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     php7-pdo_mysql \
     php7-tokenizer \
     nginx \
-    mysqli \
     && rm -f /var/cache/apk/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- \
