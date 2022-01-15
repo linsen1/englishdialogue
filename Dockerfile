@@ -1,4 +1,5 @@
 FROM php:8.0-apache
+
 # Set working directory
 WORKDIR /var/www
 
