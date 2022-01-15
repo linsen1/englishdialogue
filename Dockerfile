@@ -1,49 +1,62 @@
-# 写在最前面：强烈建议先阅读官方教程[Dockerfile最佳实践]（https://docs.docker.com/develop/develop-images/dockerfile_best-practices/）
-# 选择构建用基础镜像（选择原则：在包含所有用到的依赖前提下尽可能提及小）。如需更换，请到[dockerhub官方仓库](https://hub.docker.com/_/php?tab=tags)自行选择后替换。
-FROM php:8.0-fpm
+ROM php:8.0-fpm
 
-# 安装依赖包，如需其他依赖包，请到alpine依赖包管理(https://pkgs.alpinelinux.org/packages?name=php8*imagick*&branch=v3.13)查找。
-# 选用国内镜像源以提高下载速度
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositories \
-    && apk add --update --no-cache \
-    php7 \
-    php7-json \
-    php7-ctype \
-	php7-exif \
-    php7-fpm \
-    php7-pgsql\
-    php7-session \
-    php7-pdo_mysql \
-    php7-tokenizer \
-    nginx \
-    && rm -f /var/cache/apk/* \
+# Set working directory
+WORKDIR /var/www
 
+# Add docker php ext repo
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
+# Install php extensions
+RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
+    install-php-extensions mbstring pdo_mysql zip exif pcntl gd memcached
 
-RUN curl -sS https://getcomposer.org/installer | php -- \
-     --install-dir=/usr/local/bin --filename=composer
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    locales \
+    zip \
+    jpegoptim optipng pngquant gifsicle \
+    unzip \
+    git \
+    curl \
+    lua-zlib-dev \
+    libmemcached-dev \
+    nginx
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-        
-# 设定工作目录
-WORKDIR /app
-# 将当前目录下所有文件拷贝到/app
-COPY . /app
-RUN docker-php-ext-install mysqli pdo pdo_mysql
-RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
-RUN composer install
+# Install supervisor
+RUN apt-get install -y supervisor
 
-# 替换nginx、fpm、php配置
-RUN cp /app/conf/nginx.conf /etc/nginx/conf.d/default.conf \
-    && cp /app/conf/fpm.conf /etc/php7/php-fpm.d/www.conf \
-    && cp /app/conf/php.ini /etc/php7/php.ini \
-    && mkdir -p /run/nginx \
-    && chmod -R 777 /app/storage \
-    && mv /usr/sbin/php-fpm7 /usr/sbin/php-fpm
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# 暴露端口
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Add user for laravel application
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
+
+# Copy code to /var/www
+COPY --chown=www:www-data . /var/www
+
+# add root to www group
+RUN chmod -R ug+w /var/www/storage
+
+# Copy nginx/php/supervisor configs
+RUN cp docker/supervisor.conf /etc/supervisord.conf
+RUN cp docker/php.ini /usr/local/etc/php/conf.d/app.ini
+RUN cp docker/nginx.conf /etc/nginx/sites-enabled/default
+
+# PHP Error Log Files
+RUN mkdir /var/log/php
+RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
+
+# Deployment steps
+RUN composer install --optimize-autoloader --no-dev
+RUN chmod +x /var/www/docker/run.sh
+
 EXPOSE 80
-
-# 容器启动执行脚本
-CMD ["sh", "run.sh"]
-
+ENTRYPOINT ["/var/www/docker/run.sh"]
