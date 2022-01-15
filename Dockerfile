@@ -18,7 +18,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     nginx \
     && rm -f /var/cache/apk/* \
 
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+
 
 RUN curl -sS https://getcomposer.org/installer | php -- \
      --install-dir=/usr/local/bin --filename=composer
@@ -29,7 +29,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 # 将当前目录下所有文件拷贝到/app
 COPY . /app
-
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 RUN composer install
 
