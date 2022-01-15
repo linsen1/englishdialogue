@@ -1,4 +1,4 @@
-FROM php:8.0-fpm
+FROM php:7.4-fpm-buster
 
 # Set working directory
 WORKDIR /var/www
