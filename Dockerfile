@@ -18,7 +18,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
     nginx \
     && rm -f /var/cache/apk/* \
 
-RUN docker-php-ext-install mysqli php-mysql
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
 RUN curl -sS https://getcomposer.org/installer | php -- \
      --install-dir=/usr/local/bin --filename=composer
