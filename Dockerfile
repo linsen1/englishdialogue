@@ -1,5 +1,4 @@
-ROM php:8.0-fpm
-
+FROM devilbox/php-fpm-8.0:latest
 # Set working directory
 WORKDIR /var/www
 
