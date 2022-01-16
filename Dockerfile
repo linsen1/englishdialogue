@@ -42,12 +42,9 @@ RUN useradd -u 1000 -ms /bin/bash -g www www
 # Copy code to /var/www
 COPY --chown=www:www-data . /var/www
 
-
-
 # add root to www group
-
-RUN chmod 777 /var/www/storage /var/www/bootstrap/cache
-
+RUN chmod -R ug+w /var/www/storage
+RUN chown -R www-data:www-data /var/www/storage
 
 # Copy nginx/php/supervisor configs
 RUN cp docker/supervisor.conf /etc/supervisord.conf
@@ -56,7 +53,7 @@ RUN cp docker/nginx.conf /etc/nginx/sites-enabled/default
 
 # PHP Error Log Files
 RUN mkdir /var/log/php
-RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
+RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log && chmod 777 /var/www/storage/logs
 
 # Deployment steps
 RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
