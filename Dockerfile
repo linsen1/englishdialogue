@@ -1,6 +1,5 @@
 FROM php:7.4-fpm-buster
 
-RUN usermod -u 1000 www-data
 
 # Set working directory
 WORKDIR /var/www
@@ -46,7 +45,7 @@ COPY --chown=www:www-data . /var/www
 
 # add root to www group
 RUN chmod -R ug+w /var/www/storage
-RUN chmod 777  /var/www/storage
+RUN chown www-data /var/www/storage -R
 
 
 
