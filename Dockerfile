@@ -55,7 +55,7 @@ RUN cp docker/nginx.conf /etc/nginx/sites-enabled/default
 
 # PHP Error Log Files
 RUN mkdir /var/log/php
-RUN mkdir /var/www/bootstrap/cache
+
 RUN chmod 777  /var/www/bootstrap/cache
 RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log && chmod 777 /var/www/storage/logs
 
