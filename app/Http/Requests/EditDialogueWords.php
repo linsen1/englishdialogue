@@ -24,7 +24,7 @@ class EditDialogueWords extends FormRequest
     public function rules()
     {
         return [
-            'words_text' => 'bail|required|min:2|max:30',
+            'words_text' => 'bail|required|min:2|max:1000',
             'words_order' => 'required',
             'words_is_translate' => 'required',
             'dialogue_base_id'=>'required'//
