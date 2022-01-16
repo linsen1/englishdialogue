@@ -76,7 +76,7 @@ class HomeController extends Controller
     public function lastDialogBase()
     {
         $status = 200;
-        $info = ClassBase::orderBY('created_at', 'desc')->take(5)->get();
+        $info = ClassBase::orderBY('class_order', 'asc')->take(5)->get();
         if ($info) {
             return response()->json(['status' => $status, 'data' => $info]);
         } else {
@@ -88,7 +88,7 @@ class HomeController extends Controller
     public function dialogList()
     {
         $status = 200;
-        $info = ClassBase::orderBy('created_at', 'desc')->paginate(10);
+        $info = ClassBase::orderBy('class_order', 'asc')->paginate(10);
         return response()->json(['status' => $status, 'data' => $info]);
     }
 
