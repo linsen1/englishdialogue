@@ -58,11 +58,12 @@ RUN cp docker/nginx.conf /etc/nginx/sites-enabled/default
 RUN mkdir /var/log/php
 
 RUN chmod 777  /var/www/bootstrap/cache
-RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log && chmod 777 /var/www/storage/logs && chmod -R 777 /var/www
+RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log && chmod 777 /var/www/storage/logs
 
 # Deployment steps
 RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 RUN composer install --optimize-autoloader --no-dev
+RUN chmod -R 777 /var/www
 RUN chmod +x /var/www/docker/run.sh
 
 EXPOSE 80
