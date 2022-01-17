@@ -41,11 +41,11 @@ RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
 # Copy code to /var/www
-COPY --chown=www:www-data . /var/www
+COPY --chown=root:root . /var/www
 
 # add root to www group
-RUN chmod -R ug+w /var/www/storage
-RUN chown www-data /var/www/storage -R
+RUN chmod -R root:root /var/www/storage
+RUN chown root:root /var/www/storage -R
 
 
 
@@ -64,6 +64,7 @@ RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log && chmod 
 RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 RUN composer install --optimize-autoloader --no-dev
 RUN chmod -R 777 /var/www
+RUN chmod -R 777 /var/www/storage
 RUN chmod +x /var/www/docker/run.sh
 
 EXPOSE 80
