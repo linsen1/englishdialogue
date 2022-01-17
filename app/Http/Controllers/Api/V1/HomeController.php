@@ -69,7 +69,7 @@ class HomeController extends Controller
     public function lastDialog()
     {
         $status = 200;
-        $infos = DialogueBase::orderBY('created_at', 'desc')->take(5)->get();
+        $infos = DialogueBase::orderBY('dialogue_order', 'asc')->take(5)->get();
         return response()->json(['status' => $status, 'data' => $infos]);
     }
 
@@ -101,7 +101,7 @@ class HomeController extends Controller
 
     public function showDialogue($id){
         $status = 200;
-        $info=DialogueWords::where('dialogue_base_id',$id)->orderBy('words_order','asc')->get();
+        $info=DialogueWords::where('dialogue_base_id',$id)->with('DialogueBase')->orderBy('words_order','asc')->get();
         return response()->json(['status' => $status, 'data' => $info]);
     }
 
