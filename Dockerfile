@@ -62,6 +62,7 @@ RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/compos
 RUN composer install --optimize-autoloader --no-dev
 RUN chmod -R 777 /var/www
 RUN chmod -R 777 /var/www/storage
-
+RUN chmod +x /var/www/docker/run.sh
 
 EXPOSE 80
+ENTRYPOINT ["/var/www/docker/run.sh"]
