@@ -95,7 +95,7 @@ class HomeController extends Controller
     public function dialogInfo($id)
     {
         $status = 200;
-        $info = DialogueBase::where('class_base_id',$id)->orderBy('dialogue_order', 'asc')->get();
+        $info = DialogueBase::where('class_base_id',$id)->orderBy('id', 'asc')->get();
         return response()->json(['status' => $status, 'data' => $info]);
     }
 
