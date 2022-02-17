@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\CustomUserController;
 use App\Http\Controllers\Api\V1\HomeController;
+use App\Http\Controllers\AudioController;
 use Illuminate\Http\Request;
 
 /*
@@ -27,6 +28,7 @@ Route::prefix("v1")->group(function (){
    Route::get('/home-class-list',[HomeController::class,'dialogList'])->name('more.dialogueClassList');
    Route::get('/dialogue-list/{id}',[HomeController::class,'dialogInfo'])->name('show.dialogueList');
    Route::get('/dialogue-info/{id}',[HomeController::class,'showDialogue'])->name('show.dialogueInfo');
+    Route::get("/audio-info/{id}",[AudioController::class,'showAudio'])->name('show.audio');
 
    //用户注册、更新、查看相关方法
    Route::get('/custom-user/{id}',[CustomUserController::class,'show'])->name('custom.user.show');
@@ -46,5 +48,9 @@ Route::prefix("v1")->group(function (){
 //暂不使用
    Route::post('/user-add-fav',[CustomUserController::class,'addUserFav'])->name('custom.user.add-fav');
    Route::delete('/user-del-fav',[CustomUserController::class,'delUserFav'])->name('custom.user.del-fav');
+
+   //音频字幕播放测试
+
+
 
 });
