@@ -114,7 +114,7 @@ class HomeController extends Controller
         $audioBase=array(
             'id'=>$id,
             'video_title'=>$info[0]['DialogueBase']['dialogue_title'],
-            'video_pic'=>$info[0]['DialogueBase']['dialogue_pic'],
+            'video_pic'=>$info[0]['video_image'],
             'video_mp3'=>$info[0]['video_mp3_url'],
             'created_at'=>$info[0]['created_at'],
             'updated_at'=>$info[0]['updated_at'],
