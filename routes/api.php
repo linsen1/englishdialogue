@@ -28,7 +28,10 @@ Route::prefix("v1")->group(function (){
    Route::get('/home-class-list',[HomeController::class,'dialogList'])->name('more.dialogueClassList');
    Route::get('/dialogue-list/{id}',[HomeController::class,'dialogInfo'])->name('show.dialogueList');
    Route::get('/dialogue-info/{id}',[HomeController::class,'showDialogue'])->name('show.dialogueInfo');
-    Route::get("/audio-info/{id}",[AudioController::class,'showAudio'])->name('show.audio');
+    Route::get("/audio-info1/{id}",[AudioController::class,'showAudio'])->name('show.audio');
+
+    Route::get('/audio-info/{id}',[HomeController::class,'showAudioInfo'])->name('show.audio1');
+
 
    //用户注册、更新、查看相关方法
    Route::get('/custom-user/{id}',[CustomUserController::class,'show'])->name('custom.user.show');

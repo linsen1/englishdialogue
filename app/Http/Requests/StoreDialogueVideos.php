@@ -25,10 +25,10 @@ class StoreDialogueVideos extends FormRequest
     {
         return [
 
-            'video_url' => 'required',//
-            'video_image' => 'required',
+            'video_mp3_url' => 'required',//
             'video_time'=>'required',
-            'dialogue_base_id'=>'required'
+            'dialogue_base_id'=>'required',
+            'video_englishChinese_words'=>'required'
         ];
     }
 }

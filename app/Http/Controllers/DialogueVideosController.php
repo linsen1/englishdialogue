@@ -42,14 +42,19 @@ class DialogueVideosController extends Controller
         $validated=$request->validated();
         $video=new DialogueVideo();
         $video->dialogue_base_id=$validated['dialogue_base_id'];
-        $video->video_url=$validated['video_url'];
-        $video->video_image=$validated['video_image'];
+        $video->video_mp3_url=$validated['video_mp3_url'];
         $video->video_time=$validated['video_time'];
+        $video->video_englishChinese_words=$validated['video_englishChinese_words'];
 
         if($request->hasFile('video_url')){
             $localfile=$request->video_url->store('images','public');
             $up_to_buket=up_file_to_tencent_buck($localfile,$localfile);
             $video->video_url= $up_to_buket;
+        }
+        if($request->hasFile('video_mp3_url')){
+            $localfile=$request->video_mp3_url->store('images','public');
+            $up_to_buket=up_file_to_tencent_buck($localfile,$localfile);
+            $video->video_mp3_url= $up_to_buket;
         }
         if($request->hasFile('video_image')){
             $localfile=$request->video_image->store('images','public');
@@ -102,25 +107,34 @@ class DialogueVideosController extends Controller
      */
     public function update(EditDialogueVideos $request, $id)
     {
-        $cover_img='';
-        $vod_file='';
+        //$cover_img='';
+       // $vod_file='';
         $video=DialogueVideo::findOrFail($id);
         $validated=$request->validated();
         $video->dialogue_base_id=$validated['dialogue_base_id'];
         $video->video_time=$validated['video_time'];
+        $video->video_englishChinese_words=$validated['video_englishChinese_words'];
+
 
         if($request->hasFile('video_url')){
             $localfile=$request->video_url->store('images','public');
             $up_to_buket=up_file_to_tencent_buck($localfile,$localfile);
             $video->video_url= $up_to_buket;
-            $vod_file=$localfile;
+           // $vod_file=$localfile;
         }
+
+        if($request->hasFile('video_mp3_url')){
+            $localfile=$request->video_mp3_url->store('images','public');
+            $up_to_buket=up_file_to_tencent_buck($localfile,$localfile);
+            $video->video_mp3_url= $up_to_buket;
+        }
+
         if($request->hasFile('video_image')){
             $localfile=$request->video_image->store('images','public');
             $up_to_buket=up_file_to_tencent_buck($localfile,$localfile);
             $video->video_image= $up_to_buket;
-            $cover_img=$localfile;
-            up_video_to_tencent_vod($vod_file,$cover_img);
+            //$cover_img=$localfile;
+            //up_video_to_tencent_vod($vod_file,$cover_img);
         }
         if($request->hasFile('english_subtitle')){
             $localfile=$request->english_subtitle->store('images','public');

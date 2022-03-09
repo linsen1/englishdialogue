@@ -25,7 +25,8 @@ class EditDialogueVideos extends FormRequest
     {
         return [
             'video_time'=>'required',
-            'dialogue_base_id'=>'required' //
+            'dialogue_base_id'=>'required',
+            'video_englishChinese_words'=>'required'
         ];
     }
 }
